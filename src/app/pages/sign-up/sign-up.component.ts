@@ -11,8 +11,12 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
-import { getDataJson, isAccountExist, updateDataJson } from '../../utils';
- 
+import {
+  getDataJson,
+  isAccountExist,
+  updateDataJson,
+} from '../../service/utils';
+
 @Component({
   selector: 'app-sign-up',
   standalone: true,
@@ -30,21 +34,19 @@ export class SignUpComponent {
   validateForm: FormGroup<{
     userName: FormControl<string>;
     password: FormControl<string>;
-    remember: FormControl<boolean>;
   }> = this.fb.group({
     userName: ['', [Validators.required]],
     password: ['', [Validators.required]],
-    remember: [true],
   });
- 
+
   createNotification(
     type: string,
     notifyTitle?: string,
     notifyContent?: string
   ): void {
-    this.notification.create(type, (notifyTitle ?? ''), (notifyContent ?? ''));
+    this.notification.create(type, notifyTitle ?? '', notifyContent ?? '');
   }
- 
+
   submitForm(): void {
     if (this.validateForm.valid) {
       const { userName, password } = this.validateForm.value;
@@ -58,7 +60,7 @@ export class SignUpComponent {
         } else {
           const allAccounts = getDataJson();
           console.log(allAccounts);
-          const newAccount = { userName, password }
+          const newAccount = { userName, password };
           const newData = [...allAccounts, newAccount];
           updateDataJson(newData);
           this.createNotification(
@@ -77,7 +79,7 @@ export class SignUpComponent {
       });
     }
   }
- 
+
   constructor(
     private fb: NonNullableFormBuilder,
     private notification: NzNotificationService

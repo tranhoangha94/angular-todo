@@ -1,0 +1,4 @@
+enum User {
+  userName,
+  password,
+}

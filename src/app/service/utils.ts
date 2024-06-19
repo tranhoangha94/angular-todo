@@ -1,5 +1,5 @@
-import { User } from './types';
- 
+import { User } from "./types";
+
 const fs = require('fs');
 const allAccounts: User[] = require('./accounts.json');
 console.log(allAccounts);
